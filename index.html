@@ -6,25 +6,18 @@
 	    <title></title>
 	    
 	    <link href="css/mui.min.css" rel="stylesheet"/>
-		<style type="text/css">
-			#zone_joystick{
-				width: 200px;
-				height: 200px;
-				background-color: blueviolet;
-			}
-		</style>
+		<link rel="stylesheet" type="text/css" href="css/index.css"/>
 	</head>
 	<body>
-		<div id="zone_joystick"></div>
+		<img id="img_vedio" src="img/background.jpg" alt="等待视频传输"/>
+		<div id="zone_joystick_1"></div>
+		<div id="zone_joystick_2"></div>
 		
 		<script src="js/mui.min.js"></script>
 		<script src="nipplejs/dist/nipplejs.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/index.js" type="text/javascript" charset="utf-8"></script>
 		<script>
-			mui.init();
-		    var options = {
-		        zone: document.getElementById('zone_joystick'),
-		    };
-		    var manager = nipplejs.create(options);
+			mui.init();	    
 		</script>
 	</body>
 </html>

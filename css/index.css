@@ -1,0 +1,20 @@
+#zone_joystick_1{	
+	position: absolute;
+	left: 0px;
+	bottom: 0px;
+	width: 200px;
+	height: 200px;
+	border: solid 1px;
+	
+}
+#zone_joystick_2{
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+	width: 200px;
+	height: 200px;
+	border: solid 1px;
+}
+#img_vedio{
+	width: 100%;
+}
