@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#zone_joystick{
+				width: 200px;
+				height: 200px;
+				background-color: blueviolet;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="zone_joystick"></div>
+		
+		<script src="dist/nipplejs.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+		    var options = {
+		        zone: document.getElementById('zone_joystick'),
+		    };
+		    var manager = nipplejs.create(options);
+		</script>
+	</body>
+</html>

@@ -68,14 +68,22 @@ $("#btn_status").click(function(){
 var ws=null;
 
 var webSocketAdd=null
+var tcpSocketAdd=null
 
 mui.plusReady(function(){
 /**************************读取原始数据填入input****************************************************/	
 	webSocketAdd=plus.storage.getItem("webSocketAdd");
 	$("#ipt_websocket").val(webSocketAdd);
 	
+	tcpSocketAdd=plus.storage.getItem("tcpSocketAdd");
+	$("#ipt_socket").val(tcpSocketAdd);
+	
 	$("#btn_websocket").click(function(){
 		if($("#btn_websocket").html()=="连接"){
+			plus.tcpSocket.close(function(result){
+	            mui.toast("断开连接");
+	        });
+	        
 			webSocketAdd = $("#ipt_websocket").val();
 			plus.storage.setItem("webSocketAdd",webSocketAdd);		
 			ws =  new  ReconnectingWebSocket('ws://'+webSocketAdd);	
@@ -88,16 +96,52 @@ mui.plusReady(function(){
 			ws.onclose=function(){
 				$("#btn_websocket").html("连接")
 			}
+			ws.onmessage=function(evt){
+				console.log(evt.data)
+				var img = document.getElementById("img_vedio")
+				img.src='data:image/jpeg;base64,'+evt.data;
+			}
 		}else{
 			$("#btn_websocket").html("连接")
 			$("#btn_status").val("未连接")
 			ws.close()
 		}
 	})
-	
+	$("#btn_socket").click(function(){
+		if($("#btn_socket").html()=="连接"){
+			try{
+				ws.close()
+			}catch(e){
+				//TODO handle the exception
+			}
+			tcpSocketAdd = $("#ipt_socket").val();
+			plus.storage.setItem("tcpSocketAdd",tcpSocketAdd);
+			plus.tcpSocket.connect(
+		        $("#ipt_socket").val().split(':')[0],
+		        $("#ipt_socket").val().split(':')[1],
+		        function(result){
+		        	$("#btn_status").val("socket")
+		        	$("#btn_websocket").html("连接")
+					$("#btn_socket").html("断开")		
+					$("#btn_bluetooth").html("连接")		
+		        },
+		        function(error){
+		            $("#btn_status").val("未连接")
+		            $("#btn_socket").html("连接")
+		            mui.toast("连接失败");
+		        }
+		    );
+	    }else{
+	    	$("#btn_socket").html("连接")
+			$("#btn_status").val("未连接")
+			plus.tcpSocket.close(function(result){
+	            mui.toast("断开连接");
+	        });
+	    }
+	})
 })//mui.plusReady(function(){
 
-/*=============================数据处理================================================*/
+/*=============================数据发送================================================*/
 setInterval(function(){
 	
 	var leftDiv = document.getElementById("div_left_view")
@@ -106,9 +150,19 @@ setInterval(function(){
 	leftDiv.innerHTML=JSON.stringify(leftJoystickData)
 	rightDiv.innerHTML=JSON.stringify(rightJoystickData)
 	
+	var x1=	leftJoystickData.x.toString()
+	var y1= leftJoystickData.y.toString()
+	var x2= rightJoystickData.x.toString()
+	var y2= rightJoystickData.y.toString()
 	try{
-		ws.send(JSON.stringify(leftJoystickData)+JSON.stringify(rightJoystickData))
+		ws.send(x1+','+y1+','+x2+','+y2+'\n')		 
 	}catch(e){
 		//TODO handle the exception
 	}
+	plus.tcpSocket.send(
+        (x1+','+y1+','+x2+','+y2+'\n').toString(),
+        function(result){
+            
+        }
+    );
 },50);
