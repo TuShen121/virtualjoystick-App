@@ -82,10 +82,10 @@ public class TcpSocket extends StandardFeature
             } catch (IOException e) {
                 e.printStackTrace();
 //                System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>send发送失败");
-                JSUtil.execCallback(pWebview, CallBackID, "消息发送失败，未知原因", JSUtil.OK, false);
+                JSUtil.execCallback(pWebview, CallBackID, "error", JSUtil.OK, false);
             }
         }else {
-            JSUtil.execCallback(pWebview, CallBackID, "消息发送失败，未连接", JSUtil.OK, false);
+            JSUtil.execCallback(pWebview, CallBackID, "error", JSUtil.OK, false);
         }
     }
     public void onMessage(IWebview pWebview, JSONArray array)
@@ -125,7 +125,7 @@ public class TcpSocket extends StandardFeature
     {
         onCloseWebview = pWebview;
         onCloseCallBackID = array.optString(0);
-//        System.out.println(">>>>>>>>>>onMessage正在运行 callback代码>>>>>>>>>"+onMessageCallBackID);
+        System.out.println(">>>>>>>>>>onMessage正在运行 callback代码>>>>>>>>>"+onMessageCallBackID);
         new Thread(){
             @Override
             public void run() {

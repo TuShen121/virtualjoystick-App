@@ -111,6 +111,7 @@ mui.plusReady(function(){
 			}
 			ws.onclose=function(){
 				$("#btn_websocket").html("连接")
+				$("#btn_status").val("未连接")
 			}
 			ws.onmessage=function(evt){
 				console.log(evt.data)
@@ -157,7 +158,8 @@ mui.plusReady(function(){
 	    }
 	})
 })//mui.plusReady(function(){
-
+//plus.tcpSocket.onClose(function(){
+//})
 /*=============================数据发送================================================*/
 setInterval(function(){
 	
@@ -179,10 +181,18 @@ setInterval(function(){
 	}catch(e){
 		//TODO handle the exception
 	}
-	plus.tcpSocket.send(
-        (x1+','+y1+','+x2+','+y2+','+btn_1+','+btn_2+'\n').toString(),
-        function(result){
-            
-        }
-    );
+	if($("#btn_socket").html()=="断开"){
+		plus.tcpSocket.send(
+	        (x1+','+y1+','+x2+','+y2+','+btn_1+','+btn_2+'\n').toString(),
+	        function(result){
+	            if(result == "error"){
+	            	$("#btn_socket").html("连接")
+					$("#btn_status").val("未连接")
+					plus.tcpSocket.close(function(result){
+			            //mui.toast("断开连接");
+			        });
+	            }
+	        }
+	    );
+   }
 },50);
