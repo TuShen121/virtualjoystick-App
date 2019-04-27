@@ -22,6 +22,7 @@ var rightJoystickData={
 	x:75,
 	y:75,
 }
+
 manager_1.on("start",function(evt){
 	leftJoystickData.x=manager_1[0].frontPosition.x
 	leftJoystickData.y=manager_1[0].frontPosition.y
@@ -60,6 +61,21 @@ manager_2.on("move",function(evt){
 	rightJoystickData.y=y
 })
 
+/***************************获取按键数据*************************************************/
+$("#btn_1").click(function(){
+	if($("#btn_1").val()=='0'){
+		$("#btn_1").val('1')
+	}else if($("#btn_1").val()=='1'){
+		$("#btn_1").val('0')
+	}
+})
+$("#btn_2").click(function(){
+	if($("#btn_2").val()=='0'){
+		$("#btn_2").val('1')
+	}else if($("#btn_2").val()=='1'){
+		$("#btn_2").val('0')
+	}
+})
 /********************打开设置******************************************/
 $("#btn_status").click(function(){
 	$("#div_setting").toggle()
@@ -81,7 +97,7 @@ mui.plusReady(function(){
 	$("#btn_websocket").click(function(){
 		if($("#btn_websocket").html()=="连接"){
 			plus.tcpSocket.close(function(result){
-	            mui.toast("断开连接");
+	            //mui.toast("断开连接");
 	        });
 	        
 			webSocketAdd = $("#ipt_websocket").val();
@@ -105,6 +121,7 @@ mui.plusReady(function(){
 			$("#btn_websocket").html("连接")
 			$("#btn_status").val("未连接")
 			ws.close()
+			ws.refresh()
 		}
 	})
 	$("#btn_socket").click(function(){
@@ -154,13 +171,16 @@ setInterval(function(){
 	var y1= leftJoystickData.y.toString()
 	var x2= rightJoystickData.x.toString()
 	var y2= rightJoystickData.y.toString()
+	
+	var btn_1 = $("#btn_1").val()
+	var btn_2 = $("#btn_2").val()
 	try{
-		ws.send(x1+','+y1+','+x2+','+y2+'\n')		 
+		ws.send(x1+','+y1+','+x2+','+y2+','+btn_1+','+btn_2+'\n')
 	}catch(e){
 		//TODO handle the exception
 	}
 	plus.tcpSocket.send(
-        (x1+','+y1+','+x2+','+y2+'\n').toString(),
+        (x1+','+y1+','+x2+','+y2+','+btn_1+','+btn_2+'\n').toString(),
         function(result){
             
         }
