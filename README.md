@@ -1,7 +1,8 @@
 # virtual pad-App
 
 这是一个虚拟摇杆App，方便开发者使用手机当遥控器 
-
+可以直接下载安装
+https://github.com/TuShen121/virtualjoystick-App/raw/master/app-debug.apk
 
 目前可以使用websocket和socket通信
 > socket只能上传摇杆数据和按键数据，格式和websocket一样
