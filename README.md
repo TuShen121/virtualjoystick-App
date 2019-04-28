@@ -23,6 +23,10 @@
  ![image](https://github.com/TuShen121/virtualjoystick-App/blob/master/img/QQ%E6%88%AA%E5%9B%BE20190428163549.jpg)
  
  # 以下是Python的代码，传输电脑摄像头的数据，你也可以传输树莓派的数据
+ >需要模块
+ `pip install simple-websocket-server`
+ `pip3 install opencv-python`
+ 
  ```
  from simple_websocket_server import WebSocketServer, WebSocket
 import cv2 as cv
