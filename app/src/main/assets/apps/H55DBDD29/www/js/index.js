@@ -114,9 +114,12 @@ mui.plusReady(function(){
 				$("#btn_status").val("未连接")
 			}
 			ws.onmessage=function(evt){
-				console.log(evt.data)
-				var img = document.getElementById("img_vedio")
-				img.src='data:image/jpeg;base64,'+evt.data;
+				if(evt.data[0]=='0'){
+                    $("#div_tp_hm").html("tp: "+evt.data.split(',')[1]+"  hm: "+evt.data.split(',')[2])
+                }else{
+                    var img = document.getElementById("img_vedio")
+                    img.src='data:image/jpeg;base64,'+evt.data;
+                }
 			}
 		}else{
 			$("#btn_websocket").html("连接")
